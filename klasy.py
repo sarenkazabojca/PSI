@@ -9,12 +9,14 @@ class Wypozyczenie:
         self.pracownik = pracownik
         self.termin_wyp = termin_wyp
         self.termin_zwr = None
+        egzemplarz.wypozyczenie = self
 
 
 class Rezerwacja:
     def wypozycz(self, termin_wyp):
         if self.egzemplarz.wypozyczenie is None:
             self.wypozyczenie = Wypozyczenie(self.egzemplarz, self.klient, self.pracownik, termin_wyp)
+            return self.wypozyczenie
         else:
             print("Błąd: Egzemplarz aktuanie wypożyczony.")
 
@@ -29,13 +31,12 @@ class Rezerwacja:
 class Egzemplarz:
     def wypozycz(self, klient, pracownik, termin_wyp):
         if self.wypozyczenie is None:
-            self.wypozyczenie = Wypozyczenie(self, klient, pracownik, termin_wyp)
+            return Wypozyczenie(self, klient, pracownik, termin_wyp)
         else:
             print("Błąd: Egzemplarz aktuanie wypożyczony.")
 
-    def __init__(self, tytul, katalog, id_egzemparza, kod_kreskowy, typ, miejsce_przechowywania, ograniczenie_wypozyczenia):
+    def __init__(self, tytul, id_egzemparza, kod_kreskowy, typ, miejsce_przechowywania, ograniczenie_wypozyczenia):
         self.tytul = tytul
-        self.katalog = katalog
         self.id_egzemplarza = id_egzemparza
         self.kod_kreskowy = kod_kreskowy
         self.typ = typ
